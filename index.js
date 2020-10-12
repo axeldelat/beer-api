@@ -34,6 +34,8 @@ let beers = [
     }
 ]
 
+app.use(getMethod)
+
 app.get('/beers', (request, response) =>{
     response.json({
         succes: true,
@@ -45,7 +47,6 @@ app.get('/beers', (request, response) =>{
 
 app.get('/beers/:id', (request, response) => {
     const id = request.params.id
-    console.log(request.params.id)
     getBeerById = beers.filter((beer) => {
         return beer.id === id
     })
@@ -98,6 +99,13 @@ app.delete('/beers/:id', (request, response) => {
         }
     })
 })
+
+function getMethod(request,response, next){
+    console.log(`${request.method}: ${request.url}`)
+    next()
+}
+
+
 
 app.listen(port, () => {
     console.log('Server is listening in port 8080')
